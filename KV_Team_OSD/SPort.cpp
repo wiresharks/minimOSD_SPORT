@@ -236,7 +236,7 @@ void sensor_handler_fcs(void)
 #ifdef SPORT_DEBUG_DATA
         1100
 #else
-        voltage
+        voltage * 10
 #endif
         );
       break;

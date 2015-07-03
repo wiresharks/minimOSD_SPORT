@@ -21,7 +21,7 @@
      #define SPORT_VBAT_SENSOR_ID (0x1BU) //< Sensor ID to be used for VBat
    #endif
 
-   #define SPORT_GPS //<  enable the GPS SPort sensor telemetry handler
+   //#define SPORT_GPS //<  enable the GPS SPort sensor telemetry handler
    #ifdef SPORT_GPS
      #define SPORT_GPS_SENSOR_ID (0x83U) //< Sensor ID to be used for GPS
    #endif

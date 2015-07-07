@@ -228,23 +228,26 @@ void configExit()
 
 void saveExit()
 {
-  //uint8_t txCheckSum;
-  //uint8_t txSize;
-
   if (configPage == 1) {
     cmdMSP[0] = MSP_SET_PID;
     s_struct((uint8_t*) &conf.pid[0].P8, 3 * PIDITEMS);
     tailSerialReply();
+    SerialFlushTX(0);
+    blankserialRequest(MSP_EEPROM_WRITE);
   }
-
-  if (configPage == 2) {
+  else if (configPage == 2) {
     cmdMSP[0] = MSP_SET_RC_TUNING;
-    s_struct((uint8_t*) &conf.rcRate8, 7);
+    s_struct((uint8_t*) &conf.rates, sizeof(conf.rates));
     tailSerialReply();
+    SerialFlushTX(0);
+    blankserialRequest(MSP_EEPROM_WRITE);
   }
-  if (configPage == 3 || configPage == 4 || configPage == 6 || configPage == 7 || configPage == 8) {
+  else if (configPage == 3 || configPage == 4 || configPage == 6 || configPage == 7 || configPage == 8) {
     writeEEPROM();
   }
+  else {
+  }
+
   configExit();
 }
 
@@ -340,16 +343,49 @@ void handleRawRC()
         }
 
         if (configPage == 2 && COL == 3) {
+#if defined(CLEANFLIGHT)
+          if (ROW == 1) {
+            conf.rates.rcRate8 --;
+          }
+          else if (ROW == 2) {
+            conf.rates.rcExpo8 --;
+          }
+          else if (ROW == 3) {
+            conf.rates.rollRate8 --;
+          }
+          else if (ROW == 4) {
+            conf.rates.pitchRate8 --;
+          }
+          else if (ROW == 5) {
+            conf.rates.yawRate8 --;
+          }
+          else if (ROW == 6) {
+            conf.rates.dynThrPID8 --;
+          }
+          else if (ROW == 7) {
+            conf.rates.thrExpo8 --;
+          }
+          else if (ROW == 8) {
+            conf.rates.tpaBreakpoint16 --;
+          }
+          else if (ROW == 9) {
+            conf.rates.rcYawExpo8 --;
+          }
+          else {
+          }
+
+#else
           if (ROW == 1)
-            conf.rcRate8 --;
+            conf.rates.rcRate8 --;
           if (ROW == 2)
-            conf.rcExpo8 --;
+            conf.rates.rcExpo8 --;
           if (ROW == 3)
-            conf.rollPitchRate --;
+            conf.rates.rollPitchRate --;
           if (ROW == 4)
-            conf.yawRate --;
+            conf.rates.yawRate --;
           if (ROW == 5)
-            conf.dynThrPID --;
+            conf.rates.dynThrPID --;
+#endif
         }
 
         if (configPage == 3 && COL == 3) {
@@ -469,16 +505,49 @@ void handleRawRC()
         }
 
         if (configPage == 2 && COL == 3) {
+#if defined(CLEANFLIGHT)
+          if (ROW == 1) {
+            conf.rates.rcRate8 ++;
+          }
+          else if (ROW == 2) {
+            conf.rates.rcExpo8 ++;
+          }
+          else if (ROW == 3) {
+            conf.rates.rollRate8 ++;
+          }
+          else if (ROW == 4) {
+            conf.rates.pitchRate8 ++;
+          }
+          else if (ROW == 5) {
+            conf.rates.yawRate8 ++;
+          }
+          else if (ROW == 6) {
+            conf.rates.dynThrPID8 ++;
+          }
+          else if (ROW == 7) {
+            conf.rates.thrExpo8 ++;
+          }
+          else if (ROW == 8) {
+            conf.rates.tpaBreakpoint16 ++;
+          }
+          else if (ROW == 9) {
+            conf.rates.rcYawExpo8 ++;
+          }
+          else {
+          }
+
+#else
           if (ROW == 1)
-            conf.rcRate8 ++;
+            conf.rates.rcRate8 ++;
           if (ROW == 2)
-            conf.rcExpo8 ++;
+            conf.rates.rcExpo8 ++;
           if (ROW == 3)
-            conf.rollPitchRate ++;
+            conf.rates.rollPitchRate ++;
           if (ROW == 4)
-            conf.yawRate ++;
+            conf.rates.yawRate ++;
           if (ROW == 5)
-            conf.dynThrPID ++;
+            conf.rates.dynThrPID ++;
+#endif
         }
 
         if (configPage == 3 && COL == 3) {
@@ -675,7 +744,7 @@ void serialMSPCheck()
   }
 
   if (cmdMSP[0] == MSP_RC_TUNING) {
-    r_struct((uint8_t*) &conf.rcRate8, 7);
+    r_struct((uint8_t*) &conf.rates, sizeof(conf.rates));
     modeMSPRequests &= ~ REQ_MSP_RC_TUNING;
   }
 

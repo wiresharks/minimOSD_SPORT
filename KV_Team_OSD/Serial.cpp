@@ -94,7 +94,15 @@ void SerialWrite(uint8_t port,uint8_t c){
 		SerialSerialize(port,c);UartSendData(port);
 }	
 
-void SerialFlush(uint8_t port){
-		  while (serialHeadRX[port] != serialTailRX[port])
-		  ;
+void SerialFlushRX(uint8_t port){
+  while (serialHeadRX[port] != serialTailRX[port]) {
+    ;
+  }
 }
+
+void SerialFlushTX(uint8_t port){
+  while (serialHeadTX[port] != serialTailTX[port]) {
+    ;
+  }
+}
+

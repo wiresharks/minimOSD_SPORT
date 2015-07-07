@@ -4,6 +4,9 @@
  /*--------------------------------------------------       Configurable parameters      ----------------------------------------------------*/
 
  // feature list to free up some RAM (TODO)
+
+ #define CLEANFLIGHT //< cleanflight config support
+
  #define SPORT
  //#define FEATURE_TEMPERATURE
  //#define FEATURE_VID_VOLTAGE
@@ -147,9 +150,13 @@
 #define LEVI 107+(30*5)
 #define LEVD 113+(30*5)
 #define MAGT 93+(30*6)
+#define TPBABT 93+(30*7)
+#define YAWEXT 93+(30*8)
 #define MAGP 101+(30*6)
 #define MAGI 107+(30*6)
 #define MAGD 113+(30*6)
+#define TPBABD 113+(30*7)
+#define YAWEXD 113+(30*8)
 
 #define SAVEP 93+(30*9)
 

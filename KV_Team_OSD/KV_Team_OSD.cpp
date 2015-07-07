@@ -172,6 +172,17 @@ const char configMsg16[] PROGMEM = "LEVEL";
 const char configMsg17[] PROGMEM = "MAG";
 //-----------------------------------------------------------Page2
 const char configMsg20[] PROGMEM = "2/9 RC TUNING";
+#if defined(CLEANFLIGHT)
+const char configMsg21[] PROGMEM = "RC RATE";
+const char configMsg22[] PROGMEM = "RC EXPO";
+const char configMsg23[] PROGMEM = "ROLL RATE";
+const char configMsg23_1[] PROGMEM = "PITCH RATE";
+const char configMsg24[] PROGMEM = "YAW RATE";
+const char configMsg25[] PROGMEM = "THR EXPO";
+const char configMsg26[] PROGMEM = "TPA RATE";
+const char configMsg27[] PROGMEM = "TPA BREAK";
+const char configMsg27_1[] PROGMEM = "YAW EXPO";
+#else
 const char configMsg21[] PROGMEM = "RC RATE";
 const char configMsg22[] PROGMEM = "EXPONENTIAL";
 const char configMsg23[] PROGMEM = "ROLL PITCH RATE";
@@ -179,6 +190,7 @@ const char configMsg24[] PROGMEM = "YAW RATE";
 const char configMsg25[] PROGMEM = "THROTTLE PID ATT";
 const char configMsg26[] PROGMEM = "MWCYCLE TIME";
 const char configMsg27[] PROGMEM = "MWI2C ERRORS";
+#endif
 //-----------------------------------------------------------Page3
 const char configMsg30[] PROGMEM = "3/9 SUPPLY & ALARM";
 const char configMsg31[] PROGMEM = "VOLTAGE ALARM";
@@ -327,7 +339,7 @@ void calculateRssi(void)
 void setup()
 {
   SerialOpen(0, 115200);
-  SerialFlush(0);
+  SerialFlushRX(0);
 
   //PWM RSSI
   pinMode(PWMrssiPin, INPUT);

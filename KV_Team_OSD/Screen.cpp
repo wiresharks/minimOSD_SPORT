@@ -866,12 +866,15 @@ void displayCursor(void)
     }
     if (configPage == 2) {
       COL = 3;
+#if defined(CLEANFLIGHT)
+#else
       if (ROW == 7)
         ROW = 5;
       if (ROW == 6)
         ROW = 10;
       if (ROW == 9)
         ROW = 5;
+#endif
       cursorpos = (ROW + 2) * 30 + 10 + 6 + 6;
     }
     if (configPage == 3) {
@@ -1002,21 +1005,43 @@ void displayConfigScreen(void)
   }
 
   if (configPage == 2) {
+#if defined(CLEANFLIGHT)
     MAX7456_WriteString_P(configMsg20, 38);
     MAX7456_WriteString_P(configMsg21, ROLLT);
-    MAX7456_WriteString(itoa(conf.rcRate8, screenBuffer, 10), ROLLD);
+    MAX7456_WriteString(itoa(conf.rates.rcRate8, screenBuffer, 10), ROLLD);
     MAX7456_WriteString_P(configMsg22, PITCHT);
-    MAX7456_WriteString(itoa(conf.rcExpo8, screenBuffer, 10), PITCHD);
+    MAX7456_WriteString(itoa(conf.rates.rcExpo8, screenBuffer, 10), PITCHD);
     MAX7456_WriteString_P(configMsg23, YAWT);
-    MAX7456_WriteString(itoa(conf.rollPitchRate, screenBuffer, 10), YAWD);
+    MAX7456_WriteString(itoa(conf.rates.rollRate8, screenBuffer, 10), YAWD);
+    MAX7456_WriteString_P(configMsg23_1, ALTT);
+    MAX7456_WriteString(itoa(conf.rates.pitchRate8, screenBuffer, 10), ALTD);
+    MAX7456_WriteString_P(configMsg24, VELT);
+    MAX7456_WriteString(itoa(conf.rates.yawRate8, screenBuffer, 10), VELD);
+    MAX7456_WriteString_P(configMsg25, LEVT);
+    MAX7456_WriteString(itoa(conf.rates.dynThrPID8, screenBuffer, 10), LEVD);
+    MAX7456_WriteString_P(configMsg26, MAGT);
+    MAX7456_WriteString(itoa(conf.rates.thrExpo8, screenBuffer, 10), MAGD);
+    MAX7456_WriteString_P(configMsg27, TPBABT);
+    MAX7456_WriteString(itoa(conf.rates.tpaBreakpoint16, screenBuffer, 10), TPBABD);
+    MAX7456_WriteString_P(configMsg27_1, YAWEXT);
+    MAX7456_WriteString(itoa(conf.rates.rcYawExpo8, screenBuffer, 10), YAWEXD);
+#else
+    MAX7456_WriteString_P(configMsg20, 38);
+    MAX7456_WriteString_P(configMsg21, ROLLT);
+    MAX7456_WriteString(itoa(conf.rates.rcRate8, screenBuffer, 10), ROLLD);
+    MAX7456_WriteString_P(configMsg22, PITCHT);
+    MAX7456_WriteString(itoa(conf.rates.rcExpo8, screenBuffer, 10), PITCHD);
+    MAX7456_WriteString_P(configMsg23, YAWT);
+    MAX7456_WriteString(itoa(conf.rates.rollPitchRate, screenBuffer, 10), YAWD);
     MAX7456_WriteString_P(configMsg24, ALTT);
-    MAX7456_WriteString(itoa(conf.yawRate, screenBuffer, 10), ALTD);
+    MAX7456_WriteString(itoa(conf.rates.yawRate, screenBuffer, 10), ALTD);
     MAX7456_WriteString_P(configMsg25, VELT);
-    MAX7456_WriteString(itoa(conf.dynThrPID, screenBuffer, 10), VELD);
+    MAX7456_WriteString(itoa(conf.rates.dynThrPID, screenBuffer, 10), VELD);
     MAX7456_WriteString_P(configMsg26, LEVT);
     MAX7456_WriteString(itoa(MW_STATUS.cycleTime, screenBuffer, 10), LEVD);
     MAX7456_WriteString_P(configMsg27, MAGT);
     MAX7456_WriteString(itoa(MW_STATUS.I2CError, screenBuffer, 10), MAGD);
+#endif
   }
 
   if (configPage == 3) {

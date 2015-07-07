@@ -61,15 +61,35 @@ struct pid_ {
 	uint8_t D8;
 };
 
+#if defined(CLEANFLIGHT)
+struct TRCRates_t {
+  uint8_t rcRate8;
+  uint8_t rcExpo8;
+  uint8_t rollRate8;
+  uint8_t pitchRate8;
+  uint8_t yawRate8;
+  uint8_t dynThrPID8;
+  uint8_t thrMid8;
+  uint8_t thrExpo8;
+  uint16_t tpaBreakpoint16;
+  uint8_t rcYawExpo8;
+} __attribute__((__packed__ ));
+#else
+struct TRCRates_t {
+  uint8_t rcRate8;
+  uint8_t rcExpo8;
+  uint8_t rollPitchRate;
+  uint8_t yawRate;
+  uint8_t dynThrPID;
+  uint8_t thrMid8;
+  uint8_t thrExpo8;
+} __attribute__((__packed__ ));
+#endif
+
+
 typedef struct {
 	pid_    pid[PIDITEMS];
-	uint8_t rcRate8;
-	uint8_t rcExpo8;
-	uint8_t rollPitchRate;
-	uint8_t yawRate;
-	uint8_t dynThrPID;
-	uint8_t thrMid8;
-	uint8_t thrExpo8;
+	TRCRates_t rates;
 }conf_t;
 
 

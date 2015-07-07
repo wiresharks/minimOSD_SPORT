@@ -130,6 +130,10 @@
 	extern const char configMsg25[] PROGMEM;
 	extern const char configMsg26[] PROGMEM;
 	extern const char configMsg27[] PROGMEM;
+#if defined(CLEANFLIGHT)
+	extern const char configMsg23_1[] PROGMEM;
+	extern const char configMsg27_1[] PROGMEM;
+#endif
 	//-----------------------------------------------------------Page3
 	extern const char configMsg30[] PROGMEM;
 	extern const char configMsg31[] PROGMEM;

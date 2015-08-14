@@ -20,6 +20,8 @@ static uint8_t dataSize;
 static uint8_t rcvChecksum;
 static uint8_t readIndex;
 
+extern const uint8_t MAXSCREENITEMS;
+
 uint8_t read8()
 {
   return serialBuffer[readIndex ++];

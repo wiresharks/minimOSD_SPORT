@@ -11,6 +11,7 @@
 #include "Screen.h"
 #include "KV_Team_OSD.h"
 #include "SPort.h"
+#include "mobius.h"
 
 // ----Variables---
 //Analog input defines
@@ -361,6 +362,10 @@ void setup()
 
 #ifdef SPORT
   sport_init();
+#endif
+
+#ifdef MOBIUS_CONTROL
+  mobius_control_initialize();
 #endif
 }
 
@@ -730,6 +735,10 @@ void loop()
   // SPort
 #ifdef SPORT
   sport_check();
+#endif
+
+#ifdef MOBIUS_CONTROL
+  mobius_control_update();
 #endif
 } // End of main loop
 

@@ -39,6 +39,13 @@
    //#define SPORT_DEBUG_DATA
 #endif
 
+//#define MOBIUS_CONTROL
+#ifdef MOBIUS_CONTROL
+  #define MOBIUS_CONTROL_PIN A2 // pin for mobius control
+  #define MOBIUS_CONTROL_CYCLES 3 // number of cycles the pin has to be active (uint8)
+#endif
+
+
   // Variables
  #define METRIC 0
  #define IMPERIAL 1
@@ -46,9 +53,16 @@
  //Analog input defines
  // **** WiteSpy hardware **** //
  #define voltagePin A0
+
+#ifndef MOBIUS_CONTROL
  #ifdef FEATURE_VID_VOLTAGE
    #define vidvoltagePin A2
  #endif
+#else
+  #ifdef FEATURE_VID_VOLTAGE
+    #undef FEATURE_VID_VOLTAGE
+  #endif
+#endif
 
  #if !defined(SPORT) && defined(FEATURE_AMPERAGE)
  #define amperagePin A1
